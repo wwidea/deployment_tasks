@@ -1,5 +1,5 @@
-require "deployment_tasks/engine"
 require "deployment_tasks/version"
+require "deployment_tasks/engine"
 require "active_record"
 require "pry" if ENV['RACK_ENV'] == 'development'
 
