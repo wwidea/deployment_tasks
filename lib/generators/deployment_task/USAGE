@@ -1,0 +1,11 @@
+Description:
+    Generates a Task to be run on deployment.  With a test.
+
+Example:
+    rails generate deployment_task NAME
+
+    This will create:    
+
+      `app/deployment_tasks/[VERSION]_[NAME].rb`
+
+      `test/deployment_tasks[VERSION]_[NAME]_test.rb`

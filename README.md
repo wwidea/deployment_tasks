@@ -38,11 +38,6 @@ This will create:
 
   `test/deployment_tasks[VERSION]_[NAME]_test.rb`
 
-And update or create:
-
-  `config/deployment_tasks.rb`
-
-
 
 ## Development
 
