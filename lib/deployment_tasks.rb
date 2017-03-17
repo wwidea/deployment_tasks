@@ -1,7 +1,7 @@
 require "deployment_tasks/engine"
 require "deployment_tasks/version"
 require "active_record"
-require "pry"
+require "pry" if ENV['RACK_ENV'] == 'development'
 
 module DeploymentTasks
   class Tasks
