@@ -1,8 +1,9 @@
 # DeploymentTasks
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/deployment_tasks`. To experiment with that code, run `bin/console` for an interactive prompt.
+DeploymentTasks allows you to run tasks on deployment, usually these are data migrations, however, you are not limited to this, you can run any ruby code you wish.  
 
-TODO: Delete this and the text above, and describe your gem
+DeploymentTasks are setup like database migrations, the files are versioned, and the tasks that have run have their version stored in the database.  Unlike database
+migrations, there is no hard dependency on the tasks having run, to run a rails app.
 
 ## Installation
 
@@ -14,15 +15,34 @@ gem 'deployment_tasks'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
     $ gem install deployment_tasks
 
+Then add this to your Capfile
+```ruby
+require 'deployment_tasks/capistrano'
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+Execute:
+
+    $ rails generate deployment_task NAME
+    
+This will create:
+
+  `app/deployment_tasks/[VERSION]_[NAME].rb`
+
+  `test/deployment_tasks[VERSION]_[NAME]_test.rb`
+
+And update or create:
+
+  `config/deployment_tasks.rb`
+
+
 
 ## Development
 
@@ -32,10 +52,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/deployment_tasks.
+Bug reports and pull requests are welcome on GitHub at https://github.com/wwidea/deployment_tasks.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
