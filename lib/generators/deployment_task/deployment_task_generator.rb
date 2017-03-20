@@ -6,7 +6,7 @@ class DeploymentTaskGenerator < Rails::Generators::NamedBase
 
   def create_task_file
     create_file "app/deployment_tasks/#{version}_#{file_name}.rb" do
-      "class #{klassname}\n" +
+      "class #{klassname} < DeploymentTasks::Base\n" +
       "  def self.run!\n" +
       "   # Do Something\n" +
       "  end\n" +

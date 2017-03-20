@@ -39,6 +39,15 @@ This will create:
   `test/deployment_tasks[VERSION]_[NAME]_test.rb`
 
 
+## Rake
+You can run the deployment tasks as a rake task as well.
+
+    $ rake deployment_tasks:run
+
+If you wish to allow a task to run again, you can use rollback(which remove the recored of having run the task, it will NOT undo whatever the task did.)
+
+    $ rake deployment_tasks:rollback [version=VERSION]
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

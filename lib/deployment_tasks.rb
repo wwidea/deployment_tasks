@@ -1,4 +1,5 @@
 require "deployment_tasks/version"
+require "deployment_tasks/railtie" if defined?(Rails)
 require "active_record"
 require "pry" if ENV['RACK_ENV'] == 'development'
 
@@ -8,10 +9,19 @@ module DeploymentTasks
       new.run!
     end
 
+    def self.rollback!(version=nil)
+      version=(version || new.most_recent_version)
+      ActiveRecord::Base.connection.execute("delete from deployment_task where version='#{version}'")
+    end
+
     def run!
       tasks_to_run.each do |task|
         ActiveRecord::Base.connection.execute("insert into deployment_task (version) values (#{task.first})") if load_and_execute(task.last)
       end
+    end
+
+    def most_recent_version
+      previous_tasks.last
     end
 
     private
@@ -24,7 +34,7 @@ module DeploymentTasks
 
     def previous_tasks
       conn = ActiveRecord::Base.connection
-      conn.select_values("select version from deployment_task")
+      conn.select_values("select version from deployment_task order by `version` asc")
     end
 
     def load_tasks_from_files
