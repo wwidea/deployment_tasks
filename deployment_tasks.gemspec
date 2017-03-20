@@ -6,8 +6,8 @@ require 'deployment_tasks/version'
 Gem::Specification.new do |spec|
   spec.name          = "deployment_tasks"
   spec.version       = DeploymentTasks::VERSION
-  spec.authors       = ["David Gross"]
-  spec.email         = ["david.gross@daggerweb.org"]
+  spec.authors       = ["David Gross", "Aaron Baldwin"]
+  spec.email         = ["david.gross@daggerweb.org", "baldwina@brightwayslearning.org"]
 
   spec.summary       = %q{Run Data Migrations, or other code in a deployment}
   spec.description   = %q{Deployment Tasks allow Data Migrations or other jobs to be run on deploy, with the expectation that they will run once, and only once.  Repetitive jobs should use Rails Jobs, and tasks run on each deploy should be in cap or whatever deploy system you use.}
