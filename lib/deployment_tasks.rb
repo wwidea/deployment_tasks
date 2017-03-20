@@ -10,7 +10,7 @@ module DeploymentTasks
 
     def run!
       tasks_to_run.each do |task|
-        ActiveRecord::Base.connection.execute("insert into deployment_task (version) values (#{task.first})") if load_and_execute(task)
+        ActiveRecord::Base.connection.execute("insert into deployment_task (version) values (#{task.first})") if load_and_execute(task.last)
       end
     end
 
@@ -18,7 +18,7 @@ module DeploymentTasks
 
     def load_and_execute(task)
       filename = task.split("/").last
-      require filename
+      require File.expand_path("app/deployment_tasks/#{filename}")
       filename.split("_")[1..-1].join("_").split('.rb').first.classify.constantize.run!
     end
 
@@ -34,7 +34,16 @@ module DeploymentTasks
     end
 
     def tasks_to_run
-      load_tasks_from_files.except(*previous_tasks).values
+      load_tasks_from_files.except(*previous_tasks)
+    end
+  end
+
+  class Base
+    class << self
+      def logger(name, path = "log")
+        @logger ||= Hash.new()
+        @logger[name.downcase] ||= Logger.new([path, "deployment_tasks_#{name.downcase}.log"].join('/'))
+      end
     end
   end
 end
