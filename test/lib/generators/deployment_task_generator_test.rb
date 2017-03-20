@@ -3,7 +3,8 @@ require 'generators/deployment_task/deployment_task_generator'
 
 class DeploymentTaskGeneratorTest < Rails::Generators::TestCase
   tests DeploymentTaskGenerator
-  destination Rails.root.join('tmp/generators')
+  root = File.expand_path("..", __FILE__)
+  destination [root].join('tmp/generators')
   setup :prepare_destination
 
   # test "generator runs without errors" do
