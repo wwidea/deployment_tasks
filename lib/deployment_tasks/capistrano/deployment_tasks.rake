@@ -4,8 +4,7 @@ namespace :deployment_tasks do
     on roles(:db) do
       within release_path do
         with rails_env: fetch(:rails_env) do
-          require 'deployment_tasks'
-          DeploymentTasks::Tasks.run!
+          execute :rake, 'deployment_tasks:run'
         end
       end
     end
