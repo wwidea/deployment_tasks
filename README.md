@@ -48,6 +48,20 @@ If you wish to allow a task to run again, you can use rollback(which remove the 
 
     $ rake deployment_tasks:rollback [version=VERSION]
 
+## Rails console
+To run all un-run tasks:
+
+    irb> DeploymentTasks::Tasks.run!
+
+To rollback the last task:
+
+    irb> DeploymentTasks::Tasks.rollback!
+
+To rollback a specific task:
+
+    irb> DeploymentTasks::Task.rollback!("VERSION")
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
