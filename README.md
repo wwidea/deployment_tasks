@@ -21,9 +21,15 @@ Or install it yourself as:
 
     $ gem install deployment_tasks
 
-Then add this to your Capfile
+## Capistrano (optional)
+
+To automatically run deployment tasks on deploy, include:
 ```ruby
 require 'deployment_tasks/capistrano'
+```
+And ensure you have included `capistrano-rails` as well.
+```ruby
+require 'capistrano/rails'
 ```
 
 ## Usage
@@ -37,6 +43,11 @@ This will create:
   `app/deployment_tasks/[VERSION]_[NAME].rb`
 
   `test/deployment_tasks[VERSION]_[NAME]_test.rb`
+
+It will also create the migration file for the `deployment_tasks` table if no such table exists.
+
+  `db/migrate/[VERSION]_create_deployment_tasks_table.deployment_tasks.rb`
+
 
 
 ## Rake
