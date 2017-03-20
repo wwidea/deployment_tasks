@@ -24,8 +24,8 @@ class DeploymentTaskGenerator < Rails::Generators::NamedBase
 
   def create_migration_file
     unless ActiveRecord::Base.connection.data_source_exists? 'deployment_task'
-      source_root File.expand_path("../templates", __FILE__)
-      copy_file "create_deployment_tasks_table.rb", "db/migrate/#{DateTime.now.to_s(:numbre)}_create_deployment_tasks_table.deployment_tasks.rb"
+      DeploymentTaskGenerator.source_root File.expand_path("../templates", __FILE__)
+      copy_file "create_deployment_tasks_table.rb", "db/migrate/#{DateTime.now.to_s(:number)}_create_deployment_tasks_table.deployment_tasks.rb"
     end
   end
 
