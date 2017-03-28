@@ -7,7 +7,7 @@ class DeploymentTasksTest < Minitest::Test
   end
 
   def test_that_run_works
-    assert_equal Hash["123", "test/fixtures/123_test_task.rb"], ::DeploymentTasks::Tasks.run!
+    assert_equal Hash("123" => "test/fixtures/123_test_task.rb"), ::DeploymentTasks::Tasks.run!
   end
 
   def test_that_rollback_works
@@ -20,7 +20,7 @@ class DeploymentTasksTest < Minitest::Test
 
   def test_that_rollback_then_run_works
     assert ::DeploymentTasks::Tasks.rollback!('123')
-    assert_equal Hash["123", "test/fixtures/123_test_task.rb"], ::DeploymentTasks::Tasks.run!
+    assert_equal Hash("123" => "test/fixtures/123_test_task.rb"), ::DeploymentTasks::Tasks.run!
   end
 
 end
