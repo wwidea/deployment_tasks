@@ -2,10 +2,6 @@ require 'test_helper'
 
 class DeploymentTasksTest < Minitest::Test
 
-  def setup
-    Dir.mkdir("log") unless File.exists?("log")
-  end
-
   def test_that_it_has_a_version_number
     refute_nil ::DeploymentTasks::VERSION
   end
