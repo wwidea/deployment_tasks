@@ -18,12 +18,11 @@ module DeploymentTasks
       end
     end
 
-    def self.rollback!(version=nil)
+    def self.rollback!(version = nil)
       new.rollback!(version)
     end
 
-    def rollback!(version)
-      version=(version || most_recent_version)
+    def rollback!(version = most_recent_version)
       rollback_log.info "Rolling back version=#{version}"
       ActiveRecord::Base.connection.execute("delete from deployment_task where version='#{version}'")
     end
@@ -75,6 +74,7 @@ module DeploymentTasks
       def version
         File.basename(self.method(:run!).source_location.first).split('_').first
       end
+
       def logger(name = self.name, path = "log")
         Dir.mkdir("#{path}/deployment_tasks") unless File.exists?("#{path}/deployment_tasks")
         @logger ||= Hash.new()
