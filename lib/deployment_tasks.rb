@@ -10,7 +10,7 @@ module DeploymentTasks
     Tasks.new.run!
   end
 
-  def self.rollback!(version=nil)
+  def self.rollback!(version = nil)
     Tasks.new.rollback!(version)
   end
 end
