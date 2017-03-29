@@ -1,5 +1,5 @@
 module DeploymentTasks
-  class Base
+  class Task 
     class << self
       def version
         File.basename(self.method(:run!).source_location.first).split('_').first

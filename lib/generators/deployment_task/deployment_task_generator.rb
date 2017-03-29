@@ -6,7 +6,7 @@ class DeploymentTaskGenerator < Rails::Generators::NamedBase
 
   def create_task_file
     create_file "app/deployment_tasks/#{version}_#{file_name}.rb" do
-      "class #{klassname} < DeploymentTasks::Base\n" +
+      "class #{klassname} < DeploymentTasks::Task\n" +
       "  def self.run!\n" +
       "   # Do Something\n" +
       "  end\n" +
@@ -25,7 +25,7 @@ class DeploymentTaskGenerator < Rails::Generators::NamedBase
   end
 
   def create_migration_file
-    unless ActiveRecord::Base.connection.data_source_exists? 'deployment_task'
+    unless ActiveRecord::Base.connection.data_source_exists? DeploymentTasks.database_table_name
       copy_file "create_deployment_tasks_table.rb", "db/migrate/#{DateTime.now.to_s(:number)}_create_deployment_tasks_table.deployment_tasks.rb"
     end
   end

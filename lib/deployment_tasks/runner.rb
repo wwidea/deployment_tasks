@@ -1,9 +1,9 @@
 module DeploymentTasks
-  class Tasks
+  class Runner
     def run!
       tasks_to_run.each do |task|
         if load_and_execute(task.last)
-          ActiveRecord::Base.connection.execute("insert into deployment_task (version) values (#{task.first})") 
+          ActiveRecord::Base.connection.execute("insert into #{DeploymentTasks.database_table_name} (version) values (#{task.first})") 
           run_log.info "Successfully ran #{task.last}"
         end
       end
@@ -11,7 +11,7 @@ module DeploymentTasks
 
     def rollback!(version = most_recent_version)
       rollback_log.info "Rolling back version=#{version}"
-      ActiveRecord::Base.connection.execute("delete from deployment_task where version='#{version}'")
+      ActiveRecord::Base.connection.execute("delete from #{DeploymentTasks.database_table_name} where version='#{version}'")
     end
 
     def most_recent_version
@@ -32,7 +32,7 @@ module DeploymentTasks
 
     def previous_tasks
       conn = ActiveRecord::Base.connection
-      conn.select_values("select version from deployment_task order by `version` asc")
+      conn.select_values("select version from #{DeploymentTasks.database_table_name} order by `version` asc")
     end
 
     def load_tasks_from_files

@@ -3,7 +3,7 @@ require 'test_helper'
 class DeploymentTasksTest < Minitest::Test
 
   def setup
-    ActiveRecord::Base.connection.execute("delete from deployment_task")
+    ActiveRecord::Base.connection.execute("delete from #{::DeploymentTasks.database_table_name}")
   end
 
   def test_that_it_has_a_version_number
@@ -31,7 +31,7 @@ class DeploymentTasksTest < Minitest::Test
 end
 
 module DeploymentTasks
-  class Tasks
+  class Runner
     private
     def file_require_path(filename)
       "test/fixtures/#{filename}"

@@ -72,6 +72,16 @@ To rollback a specific task:
 
     irb> DeploymentTasks::Task.rollback!("VERSION")
 
+## Custom Table Name
+If you require a table name other than 'deployment_tasks', you can define an initializer with the following in it:
+```ruby
+module DeploymentTasks
+  def self.database_table_name
+    "your_custom_name"
+  end
+end
+```
+After this is done, create your first task, to make the migration with the new table name.  If you are changing the name of the table(it already exists), you'll need to make a custom migration to update the table name.
 
 ## Development
 
