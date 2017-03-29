@@ -35,6 +35,7 @@ module DeploymentTasks
     end
 
     def class_from_file(file)
+      load file
       File.basename(file, '.rb').split('_')[1..-1].join('_').classify.constantize
     end
 
