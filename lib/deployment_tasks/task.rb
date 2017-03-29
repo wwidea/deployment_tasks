@@ -2,7 +2,15 @@ module DeploymentTasks
   class Task 
     class << self
       def version
-        File.basename(self.method(:run!).source_location.first).split('_').first
+        task_file_path.split('_').first
+      end
+
+      def name
+        File.basename(task_file_path, '.rb').split('_')[1..-1].join('_').classify
+      end
+
+      def task_file_path
+        File.basename(self.method(:run!).source_location.first)
       end
 
       def logger(name = self.name, path = "log")

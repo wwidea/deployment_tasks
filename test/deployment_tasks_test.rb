@@ -3,6 +3,7 @@ require 'test_helper'
 class DeploymentTasksTest < Minitest::Test
 
   def setup
+    load "test/fixtures/123_test_task.rb"
     ActiveRecord::Base.connection.execute("delete from #{::DeploymentTasks.database_table_name}")
   end
 
@@ -11,7 +12,7 @@ class DeploymentTasksTest < Minitest::Test
   end
 
   def test_that_run_works
-    assert_equal Hash("123" => "test/fixtures/123_test_task.rb"), ::DeploymentTasks.run!
+    assert_equal [TestTask], ::DeploymentTasks.run!
   end
 
   def test_that_rollback_works
@@ -23,9 +24,9 @@ class DeploymentTasksTest < Minitest::Test
   end
 
   def test_that_rollback_then_run_works
-    assert_equal Hash("123" => "test/fixtures/123_test_task.rb"), ::DeploymentTasks.run!
+    assert_equal [TestTask], ::DeploymentTasks.run!
     assert ::DeploymentTasks.rollback!('123')
-    assert_equal Hash("123" => "test/fixtures/123_test_task.rb"), ::DeploymentTasks.run!
+    assert_equal [TestTask], ::DeploymentTasks.run!
   end
 
 end

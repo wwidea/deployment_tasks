@@ -2,10 +2,9 @@ module DeploymentTasks
   class Runner
     def run!
       tasks_to_run.each do |task|
-        if load_and_execute(task.last)
-          ActiveRecord::Base.connection.execute("insert into #{DeploymentTasks.database_table_name} (version) values (#{task.first})") 
-          run_log.info "Successfully ran #{task.last}"
-        end
+        task.run!
+        ActiveRecord::Base.connection.execute("insert into #{DeploymentTasks.database_table_name} (version) values (#{task.version})") 
+        run_log.info "Successfully ran #{task.name}"
       end
     end
 
@@ -21,13 +20,7 @@ module DeploymentTasks
     private
 
     def tasks_to_run
-      load_tasks_from_files.except(*previous_tasks)
-    end
-
-    def load_and_execute(task)
-      filename = task.split("/").last
-      require   File.expand_path(file_require_path(filename))
-      filename.split("_")[1..-1].join("_").split('.rb').first.classify.constantize.run!
+      load_tasks_from_files.reject {|task| previous_tasks.include?(task.version) }.sort {|x,y| x.version <=> y.version }
     end
 
     def previous_tasks
@@ -38,7 +31,11 @@ module DeploymentTasks
     def load_tasks_from_files
       # get list of files, break into verion file_path pairs
       files = Dir[file_require_path("*")]
-      return Hash[files.map {|file| [file.split('/').last.split('_').first, file] }]
+      files.map {|file| class_from_file(file)}
+    end
+
+    def class_from_file(file)
+      File.basename(file, '.rb').split('_')[1..-1].join('_').classify.constantize
     end
 
     def file_require_path(filename)
