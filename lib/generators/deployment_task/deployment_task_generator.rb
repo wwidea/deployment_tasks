@@ -17,7 +17,7 @@ class DeploymentTaskGenerator < Rails::Generators::NamedBase
   def create_test_file
     create_file "test/deployment_tasks/#{version}_#{file_name}.rb" do
       "class #{klassname}Test < ActiveSupport::TestCase\n" +
-      "  test 'test deploy task'\n" +
+      "  test 'test deploy task' do\n" +
       "    assert false\n" +
       "  end\n" +
       "end\n"
